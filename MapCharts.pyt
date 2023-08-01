@@ -546,8 +546,6 @@ class MapTreemaps(object):
                 extent_poly = arcpy.Polygon(arcpy.Array([extent.upperLeft, extent.upperRight, extent.lowerRight, extent.lowerLeft]), spatial_reference=sr)
                 row = (square[4], square[5], square[6], extent_poly)
                 cursor.insertRow(row)
-
-        arcpy.management.ApplySymbologyFromLayer(in_layer=os.path.basename(out_fc), in_symbology_layer=in_fc, symbology_fields="VALUE_FIELD {0} {1}".format(category_field, fields[category_field][0]))
         return
 
     def postExecute(self, parameters):
