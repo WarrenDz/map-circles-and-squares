@@ -82,7 +82,7 @@ class FlatPackedMapCircles(object):
             direction="Input")
         param5.filter.type = "ValueList"
         param5.filter.list = ['DEFAULT', 'ASCENDING', 'DESCENDING', 'RANDOM']
-        param5.value = "DESCNEDING"
+        param5.value = "DESCENDING"
         param5.parameterDependencies = [param4.name]
         param5.enabled = False
 
@@ -148,7 +148,7 @@ class FlatPackedMapCircles(object):
         import pandas as pd
         import packcircles as pc
 
-
+        arcpy.env.overwriteOutput = True
         arcpy.addOutputsToMap = True
 
         # Containers to hold various things
@@ -215,7 +215,7 @@ class FlatPackedMapCircles(object):
 
         # Convert table to pandas dataframe
         df_data = arcgis_table_to_df(in_fc=in_fc)
-        df_data[measure_field].fillna(0, inplace = True)
+        df_data = df_data.dropna(subset=[measure_field])
         # Apply chosen sort order
         if sort_field and sort_field != "":
             if sort_dir == 'ASCENDING':
@@ -405,6 +405,7 @@ class MapTreemaps(object):
         import squarify as sq
 
         arcpy.addOutputsToMap = True
+        arcpy.env.overwriteOutput = True
 
         # Parameters
         in_fc = parameters[0].valueAsText
@@ -416,8 +417,7 @@ class MapTreemaps(object):
         width_max = parameters[6].value
 
         arcpy.env.outputCoordinateSystem = arcpy.Describe(in_fc).spatialReference
-        # oid_field = arcpy.Describe(in_fc).OIDFieldName
-        sr = arcpy.Describe(in_fc).spatialReference # .exportToString()
+        sr = arcpy.Describe(in_fc).spatialReference
 
         # Field type mapping dictionary
         field_type_dict = {
@@ -429,15 +429,17 @@ class MapTreemaps(object):
         }
 
         # Create a list of fields and their properties based on the input
-        fields = []
+        fields = {}
         for f in arcpy.ListFields(in_fc):
             if f.name in [group_field, category_field, measure_field]:
-                f_dict = {}
-                f_dict['name'] = 'tm_{0}'.format(f.name) # prefix 'treemap_' to ensure no output field will be a resesrved column name
-                f_dict['type'] = field_type_dict[f.type]
-                f_dict['length'] = f.length
-                fields.append(f_dict)
-
+                fields[f.name] = [
+                    'tm_{0}'.format(f.name), # prefix 'tm_' to ensure no output field will be a resesrved column name
+                    field_type_dict[f.type],
+                    f.length
+                ]
+        
+        # Ouput fields
+        arcpy.AddMessage(str('Output fields: {0}'.format(fields)))
 
         # Functionality: Convert feature class to pandas dataframe
         # Original Author: [d-wasserman](https://gist.github.com/d-wasserman)
@@ -484,7 +486,7 @@ class MapTreemaps(object):
 
         # Convert table to pandas dataframe
         df_data = arcgis_table_to_df(in_fc=in_fc)
-        df_data[measure_field].fillna(0, inplace = True)
+        df_data = df_data.dropna(subset=[measure_field]) # drop nulls
 
         # Create a dataframe aggregating the data to the group and category fields, summing the value field
         df_data_sum = df_data.groupby([group_field, category_field])[[measure_field]].aggregate('sum')
@@ -518,17 +520,16 @@ class MapTreemaps(object):
             df_square_group = pre_squares[pre_squares[group_field] == group]
             categories = df_square_group[category_field].to_list()
             values_raw = df_square_group[measure_field].to_list()
-            x = list(set(df_square_group['X_CENTROID'].to_list()))[0]
-            y = list(set(df_square_group['Y_CENTROID'].to_list()))[0]
             w = data_to_width(list(set(df_square_group[measure_field_sum].to_list()))[0], extents[0], extents[1], width_min, width_max)
+            x = (list(set(df_square_group['X_CENTROID'].to_list()))[0]) - w * 0.5
+            y = (list(set(df_square_group['Y_CENTROID'].to_list()))[0]) - w * 0.5
             values = sq.normalize_sizes(values_raw, w, w)
             rects = sq.squarify(values, x, y, w, w)
             # Reassign the group and category fields
             for r, cat, v in zip(rects, categories, values_raw):
-                # TODO - Offset coordinates by half width...
-                r[group_field] = group
-                r[category_field] = cat
-                r[measure_field] = v
+                r[fields[group_field][0]] = group
+                r[fields[category_field][0]] = cat
+                r[fields[measure_field][0]] = v
                 tree_dict.append(r)
 
         # Convert squares to dataframe
@@ -537,20 +538,18 @@ class MapTreemaps(object):
 
         # Create output feature class
         outputTreeMaps = arcpy.management.CreateFeatureclass(out_path=os.path.dirname(out_fc), out_name=os.path.basename(out_fc), geometry_type="POLYGON", spatial_reference=sr)
-        # TODO - Ensure field names are a reserved name...
-        arcpy.management.AddFields(in_table=outputTreeMaps, field_description=[[fields[0]['name'], fields[0]['type'], '', fields[0]['length']], [fields[1]['name'], fields[1]['type'], '', fields[1]['length']], [fields[2]['name'], fields[2]['type'], '', fields[2]['length']]])
+        arcpy.management.AddFields(in_table=outputTreeMaps, field_description=[[fields[group_field][0], fields[group_field][1], '', fields[group_field][2]], [fields[category_field][0], fields[category_field][1], '', fields[category_field][2]], [fields[measure_field][0], fields[measure_field][1], '', fields[measure_field][2]]])
         arcpy.AddMessage('Creating treemap output...')
-        with arcpy.da.InsertCursor(in_table=outputTreeMaps, field_names=[group_field, category_field, measure_field, 'SHAPE@']) as cursor:
+        with arcpy.da.InsertCursor(in_table=outputTreeMaps, field_names=[fields[group_field][0], fields[category_field][0], fields[measure_field][0], 'SHAPE@']) as cursor:
             for square in squares_array:
-                arcpy.AddMessage(str(square))
                 extent = arcpy.Extent(XMin=square[0], YMin=square[1], XMax=square[0] + square[2], YMax=square[1]+ square[3], spatial_reference=sr)
                 extent_poly = arcpy.Polygon(arcpy.Array([extent.upperLeft, extent.upperRight, extent.lowerRight, extent.lowerLeft]), spatial_reference=sr)
                 row = (square[4], square[5], square[6], extent_poly)
                 cursor.insertRow(row)
-        
         return
 
     def postExecute(self, parameters):
         """This method takes place after outputs are processed and
         added to the display."""
+
         return
