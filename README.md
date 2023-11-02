@@ -16,9 +16,12 @@ The following steps outline how to download the toolbox and install the required
 ### Python packages
 1. [Clone your default ArcGIS Pro environment](https://pro.arcgis.com/en/pro-app/latest/arcpy/get-started/clone-an-environment.htm) and provide it a name.
 2. In the new environment, run the following commands to install the required libraries.
+
 Install [squarify](https://github.com/laserson/squarify) used to create treemaps.
 `pip install squarify`
+
 Install [circlify](https://github.com/elmotec/circlify/tree/main) used to create packed circles with hierarchy
 `pip install circlify`
+
 Install [packcircles](https://github.com/mhtchan/packcircles/tree/main) used to create packed circles with a flat hierarchy (clustered circles).
 `pip install packedcircles`
