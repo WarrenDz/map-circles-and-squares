@@ -108,11 +108,11 @@ Suggested values might included administrative areas such as, neighborhoods, sta
 
 `category_field`: The field in the input that will be used to calculate statistics separately for each unique attribute value. This field represents the lowest level of granularity within the data.
 
-`width_min`: A numerical constraint that will be used to determine the minimum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
+`diam_min`: A numerical constraint that will be used to determine the minimum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
 
 This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
 
-`width_max`: A numerical constraint that will be used to determine the maximum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
+`diam_max`: A numerical constraint that will be used to determine the maximum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
 
 This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
 
