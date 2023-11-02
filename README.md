@@ -21,11 +21,11 @@ Install [squarify](https://github.com/laserson/squarify) used to create treemaps
 
     `pip install squarify`
 
-Install [circlify](https://github.com/elmotec/circlify/tree/main) used to create packed circles with hierarchy.
+Install [circlify](https://github.com/elmotec/circlify) used to create packed circles with hierarchy.
 
     `pip install circlify`
 
-Install [packcircles](https://github.com/mhtchan/packcircles/tree/main) used to create packed circles with a flat hierarchy (clustered circles).
+Install [packcircles](https://github.com/mhtchan/packcircles) used to create packed circles with a flat hierarchy (clustered circles).
 
     `pip install packedcircles`
 
@@ -112,3 +112,9 @@ This measurement uses the units of the input feature coordinate system and may r
 `width_max`: A numerical constraint that will be used to determine the maximum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
 
 This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+## Documention
+Some things to remember and some known issues
+- **These tools calculate sizes in the units of the coordinate system of the input layer**.
+- An **equal area** projection should be used when running these tools and visualizing the outputs.
+- The most common error is `The coordinates or measures are out of bounds.` this happens when the allowable size of the output features exceeds the bounds of the coordinate system being used. You'll need to change your coordinate system or reduce the allowable size of the output features.
