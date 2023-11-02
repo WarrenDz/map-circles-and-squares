@@ -2,9 +2,9 @@
 Python geoprocessing toolbox for creating map based charts in ArcGIS Pro.
  
 ## Contents
-- Installation
-- Usage
-- Documentation
+- [Installation](https://github.com/WarrenDz/MapCharts/edit/main/README.md#installation)
+- [Usage](https://github.com/WarrenDz/MapCharts/edit/main/README.md#usage)
+- [Documentation](https://github.com/WarrenDz/MapCharts/edit/main/README.md#documentation)
 
 ## Installation
 The following steps outline how to download the toolbox and install the required Python packages.
@@ -28,3 +28,87 @@ Install [circlify](https://github.com/elmotec/circlify/tree/main) used to create
 Install [packcircles](https://github.com/mhtchan/packcircles/tree/main) used to create packed circles with a flat hierarchy (clustered circles).
 
     `pip install packedcircles`
+
+## Usage
+The following describes the various inputs and outputs of each tool within the toolbox.
+
+### Create Flat Packed Map Circles
+
+
+`in_fc`: The input feature class or layer.
+
+`out_fc`: The output feature class that will be created and to which the results will be written.
+
+`value`: Specifies the numeric field containing the attribute values that will be used to scale the area of each proportional circle. Null values are excluded from the calculations.
+
+`group_field`: The field in the input that will be used to geographically aggregate features. Features within each group will have their coordinates averaged to determine the centroid of the packed circle.
+
+Suggested values might included administrative areas such as, neighborhoods, states/provinces, and countries.
+
+`sort_field` (optional): Specifies the field whose values will be used to reorder the input records.
+
+`sort_dir`: Specifies the direction the records will be sorted.
+
+- DEFAULT: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in the order they enter the tool.
+
+- ASCENDING: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in ascending order of the values of the features.
+
+- DSCEDNING: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in descending order of the values of the features.
+
+- RANDOM: The circles within each packed circle will be randomly arranged from the centroid outwards (counter-clockwise). Repeat iteration of the tool will not be identical.
+
+`diam_min`: A numerical constraint that will be used to determine the minimum proportional circle symbol diameter. The area of the circle symbols will be scaled proportionally based on their data value.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+`diam_max`: A numerical constraint that will be used to determine the maximum proportional circle symbol diameter. The area of the circle symbols will be scaled proportionally based on their data value.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+### Create Map Treemaps
+
+
+`in_fc`: The input feature class or layer.
+
+`out_fc`: The output feature class that will be created and to which the results will be written.
+
+`value`: Specifies the numeric field containing the attribute values that will be used to apportion the area of each segment of the treemap and the size of the proportional treemap symbols. Null values are excluded from the calculations.
+
+`group_field`: An attribute field from the input summary features that is used for grouping. Coordinates of features that have the same group field value will be averaged to determine the centroid of the treemap features. The sum of numeric values within the group will determine the scaling of the proportional treemap feature.
+
+Suggested values might included administrative areas such as, neighborhoods, states/provinces, and countries.
+
+`case_field`: The field or fields in the input that will be used to calculate statistics separately for each unique attribute value (or combination of attribute values when multiple fields are specified).
+
+`width_min`: A numerical constraint that will be used to determine the minimum proportional treemap symbol width. The area of the treemap symbols will be scaled proportionally based on the aggregated data values within the group.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+`width_max`: A numerical constraint that will be used to determine the maximum proportional treemap symbol width. The area of the treemap symbols will be scaled proportionally based on the aggregated data values within the group.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+### Create Map Packed Circles
+
+
+`in_fc`: The input feature class or layer.
+
+`out_fc`: The output feature class that will be created and to which the results will be written.
+
+`value`: Specifies the numeric field containing the attribute values that will be used to apportion the area of each segment of the treemap and the size of the proportional treemap symbols. Null values are excluded from the calculations.
+
+`group_field`: An attribute field from the input summary features that is used for grouping. Coordinates of features that have the same group field value will be averaged to determine the centroid of the packed circle features. The sum of numeric values within the group will determine the scaling of the proportional packed circle feature.
+
+Suggested values might included administrative areas such as, neighborhoods, states/provinces, and countries.
+
+`case_field`: The field in the input that will be used to aggregate data within geographic groupings. This field also determines hierarchical grouping of circles.
+
+`category_field`: The field in the input that will be used to calculate statistics separately for each unique attribute value. This field represents the lowest level of granularity within the data.
+
+`width_min`: A numerical constraint that will be used to determine the minimum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
+
+`width_max`: A numerical constraint that will be used to determine the maximum proportional packed circle symbol width. The area of the packed circle will be scaled proportionally based on the aggregated data values within the group.
+
+This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
