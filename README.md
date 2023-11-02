@@ -56,7 +56,7 @@ Suggested values might included administrative areas such as, neighborhoods, sta
 
 - ASCENDING: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in ascending order of the values of the features.
 
-- DSCEDNING: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in descending order of the values of the features.
+- DESCENDING: The circles within each packed circle will be arranged from the centroid outwards (counter-clockwise) in descending order of the values of the features.
 
 - RANDOM: The circles within each packed circle will be randomly arranged from the centroid outwards (counter-clockwise). Repeat iteration of the tool will not be identical.
 
