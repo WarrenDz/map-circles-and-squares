@@ -1,6 +1,6 @@
 # ---------------------------------------------------------------------------
 # MapCharts.pyt
-# Purpose:      Creates packed circles on a map
+# Purpose:      Creates packed circles and treemaps on a map
 #
 # Author:       Warren Davison
 #
@@ -565,7 +565,7 @@ class MapTreemaps(object):
 class PackCircleHierarchy(object):
     def __init__(self):
         """Define the tool (tool name is the name of the class)."""
-        self.label = "Packed Circles with Hierarchy"
+        self.label = "Create Map Packed Circles"
         self.description = "Geoprocessing tool that creates packed circles on maps with aggregated hierarchy"
         self.canRunInBackground = False
 
