@@ -495,6 +495,7 @@ class MapTreemaps(object):
         # Create a dataframe aggregating the data to the group level, summing the value field
         measure_field_sum = measure_field + '_total'
         df_group_sum = df_data.groupby([group_field])[[measure_field]].agg('sum')
+        df_group_sum = df_group_sum.drop(df_group_sum[df_group_sum[measure_field] == 0].index)
         df_group_sum = df_group_sum.rename(columns={measure_field: measure_field_sum})
 
         # Calculate the min/max data extents
@@ -623,15 +624,15 @@ class PackCircleHierarchy(object):
         param5.parameterDependencies = [param0.name]
 
         param6 = arcpy.Parameter(
-            displayName="Minimum symbol width",
-            name="width_min",
+            displayName="Minimum symbol diameter",
+            name="diam_min",
             datatype="Long",
             parameterType="Required",
             direction="Input")
 
         param7 = arcpy.Parameter(
-            displayName="Maximum symbol width",
-            name="width_max",
+            displayName="Maximum symbol diameter",
+            name="diam_max",
             datatype="Long",
             parameterType="Required",
             direction="Input")
@@ -878,6 +879,7 @@ class PackCircleHierarchy(object):
         circles = pd.merge(how='left', left=circles, right=join_df, on=[group_field, category_field], suffixes=('', '_join'))
         circles = circles[[group_field, case_field, category_field, 'level', measure_field, 'x', 'y', 'r', 'function']]
         circles.loc[circles['function']=='Group',case_field] = circles[category_field]
+        circles.loc[circles['function']=='Group',category_field] = None
         circles_array = circles.to_numpy()
 
         # Create output feature class
@@ -888,7 +890,12 @@ class PackCircleHierarchy(object):
                 point = arcpy.PointGeometry(arcpy.Point(circle[5], circle[6]), spatial_reference=sr)
                 circleGeom = point.buffer(circle[7])
                 row = (circle[0], circle[1], circle[2], circle[3], circle[4], circle[8], circleGeom)
-                cursor.insertRow(row)
+            
+                try:
+                    cursor.insertRow(row)
+                    arcpy.AddMessage('Inserted: Group: {0}, Case: {1}, Category: {2}, {3}, {4}, {5}'.format(circle[0], circle[1], circle[2], circle[3], circle[4], circle[8]))
+                except:
+                    arcpy.AddMessage('Could not write circle with value: Group: {0}, Case: {1}, Category: {2}, {3}, {4}, {5}'.format(circle[0], circle[1], circle[2], circle[3], circle[4], circle[8]))
         return
 
     def postExecute(self, parameters):
