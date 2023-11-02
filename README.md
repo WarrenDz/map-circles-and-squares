@@ -30,7 +30,7 @@ Install [circlify](https://github.com/elmotec/circlify) used to create packed ci
 
 Install [packcircles](https://github.com/mhtchan/packcircles) used to create packed circles with a flat hierarchy (clustered circles).
 
-    `pip install packedcircles`
+    `pip install packcircles`
 
 ## Usage
 The following describes the various inputs and outputs of each tool within the toolbox.
