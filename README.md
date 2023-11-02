@@ -1,5 +1,5 @@
 # MapCirclesAndSquares
-Python geoprocessing toolbox for creating map based charts in ArcGIS Pro.
+Python geoprocessing toolbox for creating map based packed circles and treemaps in ArcGIS Pro.
  
 ## Contents
 - [Installation](https://github.com/WarrenDz/MapCharts#installation)
