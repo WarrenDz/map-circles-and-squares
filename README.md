@@ -18,10 +18,10 @@ The following steps outline how to download the toolbox and install the required
 2. In the new environment, run the following commands to install the required libraries.
 
 Install [squarify](https://github.com/laserson/squarify) used to create treemaps.
-`pip install squarify`
+    `pip install squarify`
 
 Install [circlify](https://github.com/elmotec/circlify/tree/main) used to create packed circles with hierarchy
-`pip install circlify`
+    `pip install circlify`
 
 Install [packcircles](https://github.com/mhtchan/packcircles/tree/main) used to create packed circles with a flat hierarchy (clustered circles).
-`pip install packedcircles`
+    `pip install packedcircles`
