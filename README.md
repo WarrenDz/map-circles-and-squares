@@ -2,15 +2,18 @@
 Python geoprocessing toolbox for creating map based packed circles and treemaps in ArcGIS Pro.
  
 ## Contents
-- [Installation](https://github.com/WarrenDz/MapCharts#installation)
-- [Usage](https://github.com/WarrenDz/MapCharts#usage)
-- [Documentation](https://github.com/WarrenDz/MapCharts#documentation)
+- [Installation](https://github.com/WarrenDz/MapCirclesAndSquares#installation)
+- [Usage](https://github.com/WarrenDz/MapCirclesAndSquares#usage)
+   - [Create Flat Packed Map Circles](https://github.com/WarrenDz/MapCirclesAndSquares#create-flat-packed-map-circles)
+   - [Create Map Treemaps](https://github.com/WarrenDz/MapCirclesAndSquares#create-map-treemaps)
+   - [Create Map Packed Circles](https://github.com/WarrenDz/MapCirclesAndSquares#create-map-packed-circles)
+- [Documentation](https://github.com/WarrenDz/MapCirclesAndSquares#documentation)
 
 ## Installation
 The following steps outline how to download the toolbox and install the required Python packages.
 
 ### Toolbox
-1. [Download](https://github.com/WarrenDz/MapCharts/archive/refs/heads/main.zip) and extract or clone this repo to a convenient location on your machine.
+1. [Download](https://github.com/WarrenDz/MapCirclesAndSquares/archive/refs/heads/main.zip) and extract or clone this repo to a convenient location on your machine.
 2. [Add the toolbox](https://pro.arcgis.com/en/pro-app/latest/help/analysis/geoprocessing/basics/use-a-custom-geoprocessing-tool.htm) to your ArcGIS Pro project.
 
 ### Python packages
