@@ -1,4 +1,4 @@
-# MapCharts
+# MapCirclesAndSquares
 Python geoprocessing toolbox for creating map based charts in ArcGIS Pro.
  
 ## Contents
