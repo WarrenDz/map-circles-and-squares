@@ -2,9 +2,9 @@
 Python geoprocessing toolbox for creating map based charts in ArcGIS Pro.
  
 ## Contents
-- [Installation](https://github.com/WarrenDz/MapCharts/edit/main/README.md#installation)
-- [Usage](https://github.com/WarrenDz/MapCharts/edit/main/README.md#usage)
-- [Documentation](https://github.com/WarrenDz/MapCharts/edit/main/README.md#documentation)
+- [Installation](https://github.com/WarrenDz/MapCharts/main/README.md#installation)
+- [Usage](https://github.com/WarrenDz/MapCharts/main/README.md#usage)
+- [Documentation](https://github.com/WarrenDz/MapCharts/main/README.md#documentation)
 
 ## Installation
 The following steps outline how to download the toolbox and install the required Python packages.
