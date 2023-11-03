@@ -69,7 +69,7 @@ This measurement uses the units of the input feature coordinate system and may r
 This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
 
 ### Create Map Treemaps
-![Map visualizing the landcover of New Zealand by administrative zone using map-based treemaps](../doc/Treemap_Sample.jpg)
+![Map visualizing the landcover of New Zealand by administrative zone using map-based treemaps](/doc/Treemap_Sample.jpg)
 
 `in_fc`: The input feature class or layer.
 
@@ -92,7 +92,7 @@ This measurement uses the units of the input feature coordinate system and may r
 This measurement uses the units of the input feature coordinate system and may require some experimentation to achieve the desired effect.
 
 ### Create Map Packed Circles
-![Map visualizing the landcover of New Zealand by administrative zone using map-based packed circles](../doc/PackedCircle_Sample.jpg)
+![Map visualizing the landcover of New Zealand by administrative zone using map-based packed circles](/doc/PackedCircle_Sample.jpg)
 
 `in_fc`: The input feature class or layer.
 
